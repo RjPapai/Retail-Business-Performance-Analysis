@@ -1,0 +1,188 @@
+-- ==========================================================
+-- Project: Retail Business Performance & Profitability Analysis
+-- Database: Superstore
+-- Tool: SQLite
+-- Author: Papai Ghosh
+-- Description:
+-- SQL queries for retail sales analysis, profitability analysis,
+-- regional performance, product analysis and business insights.
+-- ==========================================================
+
+
+------------------------------------------------------------
+-- Query 1 : Total Number of Records
+------------------------------------------------------------
+
+SELECT COUNT(*) AS Total_Rows
+FROM superstore;
+
+
+------------------------------------------------------------
+-- Query 2 : View First 5 Records
+------------------------------------------------------------
+
+SELECT *
+FROM superstore
+LIMIT 5;
+
+
+------------------------------------------------------------
+-- Query 3 : Sales by Category
+------------------------------------------------------------
+
+SELECT
+    Category,
+    ROUND(SUM(Sales),2) AS Total_Sales
+FROM superstore
+GROUP BY Category
+ORDER BY Total_Sales DESC;
+
+
+------------------------------------------------------------
+-- Query 4 : Profit Margin by Category
+------------------------------------------------------------
+
+SELECT
+    Category,
+    ROUND(SUM(Sales),2) AS Total_Sales,
+    ROUND(SUM(Profit),2) AS Total_Profit,
+    ROUND((SUM(Profit)/SUM(Sales))*100,2) AS Profit_Margin_Percentage
+FROM superstore
+GROUP BY Category
+ORDER BY Profit_Margin_Percentage DESC;
+
+
+------------------------------------------------------------
+-- Query 5 : Profit Margin by Sub-Category
+------------------------------------------------------------
+
+SELECT
+    "Sub-Category",
+    ROUND(SUM(Sales),2) AS Total_Sales,
+    ROUND(SUM(Profit),2) AS Total_Profit,
+    ROUND((SUM(Profit)/SUM(Sales))*100,2) AS Profit_Margin
+FROM superstore
+GROUP BY "Sub-Category"
+ORDER BY Profit_Margin DESC;
+
+
+------------------------------------------------------------
+-- Query 6 : Region-wise Sales
+------------------------------------------------------------
+
+SELECT
+    Region,
+    ROUND(SUM(Sales),2) AS Total_Sales
+FROM superstore
+GROUP BY Region
+ORDER BY Total_Sales DESC;
+
+
+------------------------------------------------------------
+-- Query 7 : Region-wise Profit
+------------------------------------------------------------
+
+SELECT
+    Region,
+    ROUND(SUM(Profit),2) AS Total_Profit
+FROM superstore
+GROUP BY Region
+ORDER BY Total_Profit DESC;
+
+
+------------------------------------------------------------
+-- Query 8 : Monthly Sales Trend
+------------------------------------------------------------
+
+SELECT
+    substr("Order Date",1,2) AS Month,
+    ROUND(SUM(Sales),2) AS Total_Sales
+FROM superstore
+GROUP BY Month
+ORDER BY Month;
+
+
+------------------------------------------------------------
+-- Query 9 : Top 10 Best Selling Products
+------------------------------------------------------------
+
+SELECT
+    "Product Name",
+    ROUND(SUM(Sales),2) AS Total_Sales
+FROM superstore
+GROUP BY "Product Name"
+ORDER BY Total_Sales DESC
+LIMIT 10;
+
+
+------------------------------------------------------------
+-- Query 10 : Top 10 Most Profitable Products
+------------------------------------------------------------
+
+SELECT
+    "Product Name",
+    ROUND(SUM(Profit),2) AS Total_Profit
+FROM superstore
+GROUP BY "Product Name"
+ORDER BY Total_Profit DESC
+LIMIT 10;
+
+
+------------------------------------------------------------
+-- Query 11 : Discount Impact on Profit
+------------------------------------------------------------
+
+SELECT
+    Discount,
+    ROUND(AVG(Profit),2) AS Average_Profit
+FROM superstore
+GROUP BY Discount
+ORDER BY Discount;
+
+
+------------------------------------------------------------
+-- Query 12 : Sales by Segment
+------------------------------------------------------------
+
+SELECT
+    Segment,
+    ROUND(SUM(Sales),2) AS Total_Sales
+FROM superstore
+GROUP BY Segment
+ORDER BY Total_Sales DESC;
+
+
+------------------------------------------------------------
+-- Query 13 : Profit by Segment
+------------------------------------------------------------
+
+SELECT
+    Segment,
+    ROUND(SUM(Profit),2) AS Total_Profit
+FROM superstore
+GROUP BY Segment
+ORDER BY Total_Profit DESC;
+
+
+------------------------------------------------------------
+-- Query 14 : Average Sales by Region
+------------------------------------------------------------
+
+SELECT
+    Region,
+    ROUND(AVG(Sales),2) AS Average_Sales
+FROM superstore
+GROUP BY Region
+ORDER BY Average_Sales DESC;
+
+
+------------------------------------------------------------
+-- Query 15 : Average Profit by Category
+------------------------------------------------------------
+
+SELECT
+    Category,
+    ROUND(AVG(Profit),2) AS Average_Profit
+FROM superstore
+GROUP BY Category
+ORDER BY Average_Profit DESC;
